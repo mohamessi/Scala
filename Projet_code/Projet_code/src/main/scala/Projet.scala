@@ -17,12 +17,14 @@ object Projet {
 
      def main (args : Array[String]) {
           // Gestion des erreurs
-          if (args.size != 1) {
+          /*if (args.size != 1) {
                println ("Erreur de syntaxe : run <num>")
                sys.exit(1)
           }
 
           val id : Int = args(0).toInt
+          */
+          val id = 1;
 
           if (id < 0 || id > 3) {
                println ("Errur : <num> doit etre compris entre 0 et 3")
