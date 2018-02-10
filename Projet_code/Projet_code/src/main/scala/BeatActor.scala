@@ -36,9 +36,19 @@ class BeatActor (val id:Int) extends Actor {
         }
 
         // Objectif : prevenir tous les autres nodes qu'on est en vie
-        case BeatTick => 
+        case BeatTick =>
+          new Thread(() => {
+            while (true) {
+              System.out.println("HELLO BEAT BEAT");
+              father ! Beat(id)
+              father ! Message ("I am the leader and i am a live")
+            }
+          }).start();
 
-        case LeaderChanged (nodeId) => 
+        case LeaderChanged (nodeId) =>{
+          leader = nodeId
+          // Pas finis encore (liens avec le node)
+        }
 
     }
 
