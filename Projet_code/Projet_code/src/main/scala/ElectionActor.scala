@@ -45,7 +45,7 @@ class ElectionActor (val id:Int, val terminaux:List[Terminal]) extends Actor {
       self ! Initiate
     }
 
-    case Initiate =>
+    case Initiate => ALG(id::nodesAlive, id)
 
     case ALG (list, init) =>
       if (status == Passive()){

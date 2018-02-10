@@ -32,7 +32,7 @@ object Projet {
           // Initialisation du node <id>
           val system = ActorSystem("LeaderSystem" + id, ConfigFactory.load().getConfig("system" + id))
           val node = system.actorOf(Props(new Node(id, config)), "Node")
-         // val node1 = system.actorOf(Props(new Node(id+1, config)), "Node1")
+         val node1 = system.actorOf(Props(new Node(id, config)), "Node1")
 
           node ! Start
          // node1 ! Start
