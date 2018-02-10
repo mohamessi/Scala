@@ -55,7 +55,6 @@ class CheckerActor(val id: Int, val terminaux: List[Terminal], electionActor: Ac
       }
       self ! IsAlive(nodeId)
 
-
     }
     // test
     // A chaque fois qu'on recoit un CheckerTick : on verifie qui est mort ou pas
@@ -72,6 +71,7 @@ class CheckerActor(val id: Int, val terminaux: List[Terminal], electionActor: Ac
         }
       }
       nodeAux = nodeAux;
+
       self ! CheckerTick
 
   }
