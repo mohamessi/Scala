@@ -31,17 +31,19 @@ class CheckerActor(val id: Int, val terminaux: List[Terminal], electionActor: Ac
     }
 
     // A chaque fois qu'on recoit un Beat : on met a jour la liste des nodes
-    case IsAlive(nodeId : Int) => {
-      System.out.println(datesForChecking);
-      if(lastDate.compareTo(datesForChecking(nodeId)) > time) {
-        datesForChecking.drop(nodeId);
+    case IsAlive(nodeId : Int) =>
+      var b = false
+      var i = nodesAlive.indexWhere(n => n == nodeId);
+      if( i == None){
+         nodesAlive = nodeId::nodesAlive
+        lastDate = new Date()
+        lastDate::datesForChecking
+
       }
-      else{ // s'il n'est pas mort
-        lastDate.setTime(new Date().getTime);
-        datesForChecking(nodeId).setTime(new Date().getTime);
+      else {
+        lastDate = new Date();
+        datesForChecking.patch(i, Seq(lastDate),1);
       }
-      System.out.println(datesForChecking);
-    }
 
     case IsAliveLeader(nodeId) => {
       lastDate.setTime(new Date().getTime);
@@ -50,11 +52,20 @@ class CheckerActor(val id: Int, val terminaux: List[Terminal], electionActor: Ac
     // A chaque fois qu'on recoit un CheckerTick : on verifie qui est mort ou pas
     // Objectif : lancer l'election si le leader est mort
     case CheckerTick =>
-      new Thread(() => {
-        while (true) {
-          datesForChecking = datesForChecking.filter(d => lastDate.compareTo(d) < time);
+      var nodeAux:List[Int] = List()
+      for (elem <- nodesAlive) {
+        if(datesForChecking(elem).compareTo(lastDate)<time){
+          if(elem == leader)
+            electionActor ! Start
         }
-      }).start();
+        else {
+
+          elem::nodeAux
+        }
+      }
+      nodeAux = nodeAux;
+
+
   }
 
 
