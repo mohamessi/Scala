@@ -24,8 +24,6 @@ object Projet {
 
           val id : Int = args(0).toInt
 
-          val id = 1;
-
           if (id < 0 || id > 3) {
                println ("Errur : <num> doit etre compris entre 0 et 3")
                sys.exit(1)
