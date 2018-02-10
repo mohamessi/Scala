@@ -46,7 +46,14 @@ class CheckerActor(val id: Int, val terminaux: List[Terminal], electionActor: Ac
       }
 
     case IsAliveLeader(nodeId) => {
-      lastDate.setTime(new Date().getTime);
+      var i = nodesAlive.indexWhere(n => n == nodeId);
+      if( i != None && i == leader ){
+        lastDate = new Date();
+        datesForChecking.patch(i, Seq(lastDate),1);
+      }
+
+
+
     }
 
     // A chaque fois qu'on recoit un CheckerTick : on verifie qui est mort ou pas
