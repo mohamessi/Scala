@@ -38,21 +38,17 @@ class BeatActor(val id: Int) extends Actor {
     }
 
     // Objectif : prevenir tous les autres nodes qu'on est en vie
-    case BeatTick =>
-      new Thread(() => {
-        while (true) {
-          System.out.println("HELLO i am in BEAT -> BeatTick");
-
-          if(id == leader) {
-            father ! Beat(id)
-            father ! Message("I am not the leader but i am in live")
-          }
-          else{
-            father ! BeatLeader(id)
-            father ! Message("I am not the leader but i am in live")
-          }
-        }
-      }).start();
+    case BeatTick => {
+      System.out.println("HELLO i am in BEAT -> BeatTick");
+      if (id == leader) {
+        father ! Beat(id)
+        father ! Message("I am not the leader but i am in live")
+      }
+      else {
+        father ! BeatLeader(id)
+        father ! Message("I am not the leader but i am in live")
+      }
+    }
 
     //changer de leader et le notifier
     case LeaderChanged(nodeId) => {
