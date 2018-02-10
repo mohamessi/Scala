@@ -44,6 +44,8 @@ class CheckerActor(val id: Int, val terminaux: List[Terminal], electionActor: Ac
         lastDate = new Date();
         datesForChecking.patch(i, Seq(lastDate),1);
       }
+      self ! IsAlive(nodeId)
+
 
     case IsAliveLeader(nodeId) => {
       var i = nodesAlive.indexWhere(n => n == nodeId);
@@ -51,7 +53,7 @@ class CheckerActor(val id: Int, val terminaux: List[Terminal], electionActor: Ac
         lastDate = new Date();
         datesForChecking.patch(i, Seq(lastDate),1);
       }
-
+      self ! IsAlive(nodeId)
 
 
     }
@@ -66,12 +68,11 @@ class CheckerActor(val id: Int, val terminaux: List[Terminal], electionActor: Ac
             electionActor ! Start
         }
         else {
-
           elem::nodeAux
         }
       }
       nodeAux = nodeAux;
-
+      self ! CheckerTick
 
   }
 
