@@ -1,7 +1,5 @@
 package upmc.akka.leader
 
-import akka.actor._
-
 case class Start ()
 
 sealed trait SyncMessage
@@ -78,7 +76,8 @@ class Node (val id:Int, val terminaux:List[Terminal]) extends Actor {
 
           // Message indiquant que le leader a change
           case LeaderChanged (nodeId) => {
-
+            displayActor ! Message ("The Leader Node " + id + " has changed -> The king is dead, long live the king")
+            beatActor ! LeaderChanged(nodeId)
           }
 
      }
