@@ -67,11 +67,13 @@ class Node (val id:Int, val terminaux:List[Terminal]) extends Actor {
 
           // Messages venant des autres nodes : pour nous dire qui est encore en vie ou mort
           case IsAlive (id) => {
-
+               displayActor ! Message ("Node " + id + " is in live")
+               checkerActor ! IsAlive(id)
           }
 
           case IsAliveLeader (id) => {
-
+               displayActor ! Message ("Node " + id + " is the leader and is in live")
+               checkerActor ! IsAliveLeader(id)
           }
 
           // Message indiquant que le leader a change
