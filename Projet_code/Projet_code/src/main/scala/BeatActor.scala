@@ -47,7 +47,7 @@ class BeatActor (val id:Int) extends Actor {
 
         case LeaderChanged (nodeId) =>{
           leader = nodeId
-          // Pas finis encore (liens avec le node)
+          BeatLeader(leader)
         }
 
     }
