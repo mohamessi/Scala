@@ -26,9 +26,12 @@ class Node (val id:Int, val terminaux:List[Terminal]) extends Actor {
 
           // Initialisation
           case Start => {
+
                displayActor ! Message ("Node " + this.id + " is created")
                checkerActor ! Start
                beatActor ! Start
+
+
 
                // Initilisation des autres remote, pour communiquer avec eux
                terminaux.foreach(n => {
@@ -38,6 +41,8 @@ class Node (val id:Int, val terminaux:List[Terminal]) extends Actor {
                          this.allNodes = this.allNodes:::List(remote)
                     }
                })
+
+
           }
 
           // Envoi de messages (format texte)
@@ -45,17 +50,34 @@ class Node (val id:Int, val terminaux:List[Terminal]) extends Actor {
                displayActor ! Message (content)
           }
 
-          case BeatLeader (nodeId) => 
+          case BeatLeader (nodeId) => {
+               System.out.println("Hello beat NODE Leader");
+               this.allNodes.foreach( n => {
+                    n ! IsAliveLeader(nodeId)
+               })
+          }
 
-          case Beat (nodeId) => 
+          case Beat (nodeId) => {
+               System.out.println("Hello beat NODE");
+               // TODO : Ici j'ai pas géré le cas ou il faut pas envoyé au noueds qui previens les autres car c pas necessaire
+               this.allNodes.foreach( n => {
+                    n ! IsAlive(nodeId)
+               })
+          }
 
           // Messages venant des autres nodes : pour nous dire qui est encore en vie ou mort
-          case IsAlive (id) => 
+          case IsAlive (id) => {
 
-          case IsAliveLeader (id) => 
+          }
+
+          case IsAliveLeader (id) => {
+
+          }
 
           // Message indiquant que le leader a change
-          case LeaderChanged (nodeId) => 
+          case LeaderChanged (nodeId) => {
+
+          }
 
      }
 
