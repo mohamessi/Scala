@@ -47,7 +47,7 @@ class CheckerActor(val id: Int, val terminaux: List[Terminal], electionActor: Ac
 
     case IsAliveLeader(nodeId) => {
       lastDate.setTime(new Date().getTime);
-          }
+    }
 
     // A chaque fois qu'on recoit un CheckerTick : on verifie qui est mort ou pas
     // Objectif : lancer l'election si le leader est mort
