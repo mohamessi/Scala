@@ -41,7 +41,7 @@ class BeatActor(val id: Int) extends Actor {
     case BeatTick => {
       System.out.println("HELLO i am in BEAT -> BeatTick");
       if (id == leader) {
-        father ! Message("I am not the leader but i am in live")
+        father ! Message("I am the leader but i am in live")
         father ! Beat(id)
       }
       else {
