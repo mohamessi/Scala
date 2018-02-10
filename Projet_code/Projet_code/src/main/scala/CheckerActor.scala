@@ -55,7 +55,7 @@ class CheckerActor(val id: Int, val terminaux: List[Terminal], electionActor: Ac
 
 
     }
-
+    // test
     // A chaque fois qu'on recoit un CheckerTick : on verifie qui est mort ou pas
     // Objectif : lancer l'election si le leader est mort
     case CheckerTick =>

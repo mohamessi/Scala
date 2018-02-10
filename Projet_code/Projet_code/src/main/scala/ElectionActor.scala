@@ -94,7 +94,7 @@ class ElectionActor (val id:Int, val terminaux:List[Terminal]) extends Actor {
                     candSucc = j
                }
           }
-
+          // test
           case AVSRSP (list, k) => {
                if(status == Waiting()){
                     if( id == k)
